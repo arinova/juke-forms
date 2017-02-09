@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import {hashHistory} from 'react-router';
 import axios from 'axios';
 
 import initialState from '../initialState';
@@ -24,7 +25,9 @@ export default class AppContainer extends Component {
     this.selectAlbum = this.selectAlbum.bind(this);
     this.selectArtist = this.selectArtist.bind(this);
     this.createPlaylist = this.createPlaylist.bind(this);
-    this.fetchPlaylist = this.fetchPlaylist.bind(this)
+    this.fetchPlaylist = this.fetchPlaylist.bind(this);
+    this.fetchAllSongs = this.fetchAllSongs.bind(this);
+    this.handleAddtoPlaylist = this.handleAddtoPlaylist.bind(this);
   }
 
   componentDidMount () {
@@ -56,7 +59,9 @@ export default class AppContainer extends Component {
     axios.post('/api/playlists', { name : playlistName })
       .then(res => res.data)
       .then(playlist => {
-          this.setState({playlists: [...this.state.playlists, playlist]})
+          this.setState({playlists: [...this.state.playlists, playlist]});
+            const path=`/playlists/${playlist.id}`;
+            hashHistory.push(path);
         });
   }
 
@@ -68,6 +73,21 @@ export default class AppContainer extends Component {
 
   }
 
+  handleAddtoPlaylist(e){
+    // e.preventDefault();
+    // console.log("song select", e.target.songSelect.value);
+    // axios.post(`/api/playlists/${this.state.selectedPlaylist.id}/songs`, {id: e.target.songSelect.value})
+    //   .then((song) => {
+    //       console.log("added:", song);
+    //   })
+  }
+
+  fetchAllSongs(){
+    axios.get('/api/songs')
+      .then((allSongs)=>{
+        this.setState({songs: allSongs.data});
+      });
+  }
 
   play () {
     AUDIO.play();
@@ -153,7 +173,9 @@ export default class AppContainer extends Component {
       selectAlbum: this.selectAlbum,
       selectArtist: this.selectArtist,
       createPlaylist: this.createPlaylist,
-      fetchPlaylist: this.fetchPlaylist
+      fetchPlaylist: this.fetchPlaylist,
+      fetchAllSongs: this.fetchAllSongs,
+      handleAddtoPlaylist: this.handleAddtoPlaylist
     });
 
     return (

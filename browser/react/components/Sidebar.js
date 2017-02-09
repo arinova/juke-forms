@@ -11,7 +11,8 @@ const Sidebar = (props) => {
     )
   })
 
-console.log("sidebar playlists", playlists)
+  //console.log("sidebar playlists", playlists)
+
   return (
     <sidebar>
       <img src="juke.svg" className="logo" />
