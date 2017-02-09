@@ -13,7 +13,7 @@ export default class Playlist extends React.Component {
 
 render() {
   const playlist = this.props.selectedPlaylist;
-console.log(playlist)
+
   return (
     <div>
       <h3>{ playlist.name }</h3>
