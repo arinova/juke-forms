@@ -8,19 +8,12 @@ export default class NewPlaylistContainer extends React.Component {
     this.state={value: "", isValid: false, start: true};
     this.handleSubmit=this.handleSubmit.bind(this);
     this.handleChange=this.handleChange.bind(this);
-    //this.createPlaylist=this.createPlaylist.bind(this);
   }
 
-  createPlaylist(playlistName){
-    axios.post('/api/playlists', { name : playlistName })
-      .then(res => res.data)
-      .then(result => {
-    console.log(result) // response json from the server!
-  });
-  }
+
 
   handleChange(e){
-    console.log("cahnge value", e.target.value);
+    //console.log("cahnge value", e.target.value);
     this.setState({value: e.target.value});
     this.setState({start: false});
     if(e.target.value.length > 16 || e.target.value.length === 0){
@@ -32,9 +25,9 @@ export default class NewPlaylistContainer extends React.Component {
 
   handleSubmit(e){
     e.preventDefault();
-    console.log("submit value", e.target.playlistName.value);
-    // this.setState({value: e.target.playlistName.value});
-    this.createPlaylist(e.target.playlistName.value);
+    //console.log("submit value", e.target.playlistName.value);
+
+    this.props.createPlaylist(e.target.playlistName.value);
     this.setState({value: ""});
   }
 
